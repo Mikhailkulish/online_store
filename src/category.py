@@ -1,5 +1,6 @@
-class Category():
+class Category:
     """Класс категорий"""
+
     name: str
     description: str
     products: list

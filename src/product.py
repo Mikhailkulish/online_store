@@ -1,5 +1,6 @@
-class Product():
+class Product:
     """Класс продуктов"""
+
     name: str
     description: str
     price: float
