@@ -17,8 +17,8 @@ def test_category_init(category1: Category, category2: Category) -> None:
     assert len(category1.products) == 3
     assert len(category2.products) == 1
 
-    assert category1.total_categories == 2
-    assert category2.total_categories == 2
+    assert category1.category_count == 2
+    assert category2.category_count == 2
 
-    assert category1.total_products == 4
-    assert category2.total_products == 4
+    assert category1.product_count == 4
+    assert category2.product_count == 4
