@@ -30,7 +30,7 @@ class Product:
         if new_price < self.__price:
             # Запрашиваем подтверждение у пользователя
             user_input = input(f"Цена понижается с {self.__price} до {new_price}. Вы согласны? (y/n): ")
-            if user_input.lower() == 'y':
+            if user_input.lower() == "y":
                 self.__price = new_price
                 print(f"Цена успешно изменена на {self.__price}")
             else:
@@ -43,10 +43,10 @@ class Product:
     @classmethod
     def new_product(cls, product_dict, existing_products=None):
         """Класс-метод для создания объекта Product из словаря с проверкой дубликатов"""
-        new_name = product_dict['name']
-        new_description = product_dict['description']
-        new_price = product_dict['price']
-        new_quantity = product_dict['quantity']
+        new_name = product_dict["name"]
+        new_description = product_dict["description"]
+        new_price = product_dict["price"]
+        new_quantity = product_dict["quantity"]
 
         # Если список существующих товаров не передан или пуст, просто создаем новый товар
         if not existing_products:

@@ -5,15 +5,13 @@ from src.product import Product
 def test_category_init(category1: Category, category2: Category) -> None:
     assert category1.name == "Смартфоны"
     assert (
-            category1.description
-            == "Смартфоны, как средство не только коммуникации, "
-               "но и получения дополнительных функций для удобства жизни"
+        category1.description == "Смартфоны, как средство не только коммуникации, "
+        "но и получения дополнительных функций для удобства жизни"
     )
     assert category2.name == "Телевизоры"
     assert (
-            category2.description
-            == "Современный телевизор, который позволяет наслаждаться просмотром, "
-               "станет вашим другом и помощником"
+        category2.description == "Современный телевизор, который позволяет наслаждаться просмотром, "
+        "станет вашим другом и помощником"
     )
     assert len(category1.products) == 3
     assert len(category2.products) == 1
@@ -75,18 +73,18 @@ def test_category_counters_persistence():
     Category.product_count = 0
 
     # Создаем пустую категорию
-    category_empty = Category("Пусто", "Описание")
+    Category("Пусто", "Описание")
     assert Category.category_count == 1
-    assert Category.product_count == 0  # товаров нет, счетчик не изменился
+    assert Category.product_count == 0
 
     # Создаем категорию с одним товаром
     product = Product("Тест", "Описание", 100.0, 2)
-    category_with_product = Category("С товаром", "Описание", [product])
+    Category("С товаром", "Описание", [product])
     assert Category.category_count == 2
-    assert Category.product_count == 1  # Было 0, добавили 1 товар, стало 1
+    assert Category.product_count == 1
 
     # Создаем категорию с двумя товарами
     product2 = Product("Тест2", "Описание2", 200.0, 3)
-    category_with_two_products = Category("С двумя товарами", "Описание", [product, product2])
+    Category("С двумя товарами", "Описание", [product, product2])
     assert Category.category_count == 3
-    assert Category.product_count == 3  # Было 1, добавили 2 товара, стало 3
+    assert Category.product_count == 3
