@@ -20,17 +20,18 @@ class Category:
     def add_product(self, product):
         """Метод для добавления товара в категорию"""
         self.__products.append(product)
-        Category.product_count += 1  # увеличиваем счетчик товаров
+        Category.product_count += 1
 
     @property
     def products(self):
         """Геттер, возвращающий список товаров в заданном формате"""
-        if not self.__products:
-            return []
+        return [str(product) for product in self.__products]
 
-        result = []
-        for product in self.__products:
-            product_str = f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
-            result.append(product_str)
+    def get_products(self):
+        """Метод для получения списка объектов продуктов"""
+        return self.__products.copy()  # Возвращаем копию для защиты данных
 
-        return result
+    def __str__(self):
+        """Строковое представление категории"""
+        total_quantity = sum(product.quantity for product in self.__products)
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
