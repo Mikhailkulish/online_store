@@ -1,4 +1,3 @@
-import pytest
 from src.category import Category
 from src.product import Product
 
@@ -160,10 +159,12 @@ def test_multiple_categories_share_counters() -> None:
     cat1 = Category("Cat1", "Desc", [Product("P1", "D1", 100, 1)])
     assert Category.category_count == 1
     assert Category.product_count == 1
+    assert cat1.name == "Cat1"  # Используем переменную
 
     cat2 = Category("Cat2", "Desc", [])
     assert Category.category_count == 2
     assert Category.product_count == 1
+    assert cat2.name == "Cat2"  # Используем переменную
 
     cat2.add_product(Product("P2", "D2", 200, 2))
     assert Category.category_count == 2

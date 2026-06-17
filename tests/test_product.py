@@ -1,4 +1,5 @@
 import pytest
+
 from src.product import Product
 
 
@@ -76,6 +77,7 @@ def test_new_product_duplicate_higher_price_no_prompt() -> None:
     result = Product.new_product(data, [existing])
     assert result.price == 200  # Цена повысилась без запроса
     assert result.quantity == 8
+
 
 def test_price_setter_decrease_approved(monkeypatch) -> None:
     product = Product("Test", "Desc", 100, 1)

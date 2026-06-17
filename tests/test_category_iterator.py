@@ -1,4 +1,5 @@
 import pytest
+from src.category import Category
 from src.category_iterator import CategoryIterator
 
 
