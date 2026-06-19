@@ -38,3 +38,28 @@ def category2():
         "станет вашим другом и помощником",
         products=[Product('55" QLED 4K', "Фоновая подсветка", 1230000.0, 7)],
     )
+
+
+@pytest.fixture
+def product3():
+    """Продукт для тестирования операций"""
+    return Product(name="Test Product", description="Test description", price=150.0, quantity=10)
+
+
+@pytest.fixture
+def product_dict():
+    """Словарь для тестирования new_product"""
+    return {"name": "TestPhone", "description": "New phone", "price": 25000.0, "quantity": 4}
+
+
+@pytest.fixture
+def empty_category():
+    """Пустая категория для тестирования"""
+    return Category(name="Пустая категория", description="Категория без товаров")
+
+
+@pytest.fixture
+def single_product_category():
+    """Категория с одним товаром"""
+    product = Product("Single Phone", "Desc", 15000, 3)
+    return Category(name="Один товар", description="Категория с одним товаром", products=[product])

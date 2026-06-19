@@ -40,6 +40,19 @@ class Product:
             self.__price = new_price
             print(f"Цена успешно изменена на {self.__price}")
 
+    def __str__(self):
+        """Строковое представление продукта"""
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        """Магический метод для сложения продуктов (получение общей стоимости)"""
+        if isinstance(other, Product):
+            # Общая стоимость текущего товара + общая стоимость другого товара
+            total_cost = (self.__price * self.quantity) + (other.__price * other.quantity)
+            return total_cost
+        else:
+            raise TypeError("Сложение возможно только с объектами класса Product")
+
     @classmethod
     def new_product(cls, product_dict, existing_products=None):
         """Класс-метод для создания объекта Product из словаря с проверкой дубликатов"""

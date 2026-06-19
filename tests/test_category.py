@@ -88,3 +88,84 @@ def test_category_counters_persistence():
     Category("С двумя товарами", "Описание", [product, product2])
     assert Category.category_count == 3
     assert Category.product_count == 3
+
+
+def test_category_str(category1: Category) -> None:
+    """Тест строкового представления категории"""
+    expected = "Смартфоны, количество продуктов: 27 шт."  # 5 + 8 + 14 = 27
+    assert str(category1) == expected
+
+
+def test_category_str_empty() -> None:
+    """Тест строкового представления пустой категории"""
+    category = Category("Пустая категория", "Описание")
+    expected = "Пустая категория, количество продуктов: 0 шт."
+    assert str(category) == expected
+
+
+def test_get_products_returns_copy(category1: Category) -> None:
+    """Тест метода get_products, который возвращает копию списка"""
+    products_copy = category1.get_products()
+    original_products = category1._Category__products
+
+    # Проверяем, что содержимое совпадает
+    assert len(products_copy) == len(original_products)
+    assert products_copy == original_products
+
+    # Проверяем, что это разные объекты (копия)
+    assert products_copy is not original_products
+
+    # Изменяем копию и проверяем, что оригинал не изменился
+    products_copy.append(Product("New", "Desc", 100, 1))
+    assert len(products_copy) == len(original_products) + 1
+    assert len(category1._Category__products) == len(original_products)
+
+
+def test_get_products_empty() -> None:
+    """Тест метода get_products для пустой категории"""
+    category = Category("Пустая", "Описание")
+    products = category.get_products()
+    assert products == []
+    assert products is not category._Category__products
+
+
+def test_add_product_updates_product_count(category1: Category) -> None:
+    """Тест обновления счетчика товаров при добавлении"""
+    initial_count = Category.product_count
+    product = Product("New Phone", "Desc", 50000, 2)
+
+    category1.add_product(product)
+
+    assert Category.product_count == initial_count + 1
+    assert len(category1._Category__products) == 4  # Было 3, стало 4
+
+
+def test_product_count_not_affected_by_get_products(category1: Category) -> None:
+    """Тест, что получение копии продуктов не влияет на счетчик"""
+    initial_count = Category.product_count
+
+    _ = category1.get_products()
+    _ = category1.products
+
+    assert Category.product_count == initial_count
+    assert len(category1._Category__products) == 3
+
+
+def test_multiple_categories_share_counters() -> None:
+    """Тест, что счетчики общие для всех категорий"""
+    Category.category_count = 0
+    Category.product_count = 0
+
+    cat1 = Category("Cat1", "Desc", [Product("P1", "D1", 100, 1)])
+    assert Category.category_count == 1
+    assert Category.product_count == 1
+    assert cat1.name == "Cat1"  # Используем переменную
+
+    cat2 = Category("Cat2", "Desc", [])
+    assert Category.category_count == 2
+    assert Category.product_count == 1
+    assert cat2.name == "Cat2"  # Используем переменную
+
+    cat2.add_product(Product("P2", "D2", 200, 2))
+    assert Category.category_count == 2
+    assert Category.product_count == 2
