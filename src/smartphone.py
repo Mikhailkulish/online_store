@@ -1,16 +1,12 @@
-from src.category import Category
+from src.product import Product
 
 
-class Smartphone(Category):
+class Smartphone(Product):
     """Класс смартфонов"""
 
-    name: str
-    description: str
-    products: list
-
-    def __init__(self, name, description, products, efficiency, model, memory, color):
+    def __init__(self, name, description, __price, quantity, efficiency, model, memory, color):
         """Инициализация атрибутов объектов класса смартфонов"""
-        super().__init__(name, description, products)
+        super().__init__(name, description, __price, quantity)
         self.efficiency = efficiency
         self.model = model
         self.memory = memory
