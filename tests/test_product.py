@@ -127,3 +127,35 @@ def test_new_product_duplicate_lower_price(monkeypatch) -> None:
     monkeypatch.setattr("builtins.input", lambda _: "y")
     result = Product.new_product(data, [existing])
     assert result.price == 80
+
+
+def test_product_add_same_type(product1: Product, product2: Product) -> None:
+    """Тест магического метода __add__ для сложения двух продуктов"""
+    total = product1 + product2
+    expected = (180000.0 * 5) + (210000.0 * 8)  # 900000 + 1680000 = 2580000
+    assert total == expected
+
+
+def test_product_add_different_type(product1: Product) -> None:
+    """Тест магического метода __add__ с другим типом данных"""
+    with pytest.raises(TypeError, match="Сложение возможно только с объектами класса Product"):
+        _ = product1 + "some string"
+
+
+def test_product_add_different_product_classes(product1: Product, smartphones1: Smartphone) -> None:
+    """Тест: попытка сложить товары разных классов должна вызывать TypeError"""
+    with pytest.raises(TypeError, match="Нельзя складывать товары разных классов"):
+        _ = product1 + smartphones1
+
+
+def test_product_add_different_subclasses(smartphones1: Smartphone, lawngrasses1: LawnGrass) -> None:
+    """Тест: попытка сложить товары разных наследников Product"""
+    with pytest.raises(TypeError, match="Нельзя складывать товары разных классов"):
+        _ = smartphones1 + lawngrasses1
+
+
+def test_product_add_same_subclass(smartphones1: Smartphone, smartphones2: Smartphone) -> None:
+    """Тест: сложение товаров одного класса-наследника должно работать"""
+    total = smartphones1 + smartphones2
+    expected = (180000.0 * 5) + (210000.0 * 8)
+    assert total == expected
