@@ -1,6 +1,8 @@
 import pytest
 
 from src.product import Product
+from src.smartphone import Smartphone
+from src.lawngrass import LawnGrass
 
 
 def test_product_init(product1: Product) -> None:
@@ -129,14 +131,14 @@ def test_new_product_duplicate_lower_price(monkeypatch) -> None:
     assert result.price == 80
 
 
-def test_product_add_same_type(product1: Product, product2: Product) -> None:
+def test_product_add_same_type_new(product1: Product, product2: Product) -> None:
     """Тест магического метода __add__ для сложения двух продуктов"""
     total = product1 + product2
     expected = (180000.0 * 5) + (210000.0 * 8)  # 900000 + 1680000 = 2580000
     assert total == expected
 
 
-def test_product_add_different_type(product1: Product) -> None:
+def test_product_add_different_type_new(product1: Product) -> None:
     """Тест магического метода __add__ с другим типом данных"""
     with pytest.raises(TypeError, match="Сложение возможно только с объектами класса Product"):
         _ = product1 + "some string"
