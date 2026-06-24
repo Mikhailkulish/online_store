@@ -1,5 +1,9 @@
+import pytest
+
 from src.category import Category
+from src.lawngrass import LawnGrass
 from src.product import Product
+from src.smartphone import Smartphone
 
 
 def test_category_init(category1: Category, category2: Category) -> None:
@@ -169,3 +173,45 @@ def test_multiple_categories_share_counters() -> None:
     cat2.add_product(Product("P2", "D2", 200, 2))
     assert Category.category_count == 2
     assert Category.product_count == 2
+
+
+def test_add_product_with_smartphone(category1: Category, smartphones1: Smartphone) -> None:
+    """Тест добавления смартфона (наследника Product)"""
+    initial_count = Category.product_count
+    initial_len = len(category1._Category__products)
+
+    category1.add_product(smartphones1)
+
+    assert len(category1._Category__products) == initial_len + 1
+    assert category1._Category__products[-1] == smartphones1
+    assert Category.product_count == initial_count + 1
+
+
+def test_add_product_with_lawn_grass(category1: Category, lawngrasses1: LawnGrass) -> None:
+    """Тест добавления газонной травы (наследника Product)"""
+    initial_count = Category.product_count
+    initial_len = len(category1._Category__products)
+
+    category1.add_product(lawngrasses1)
+
+    assert len(category1._Category__products) == initial_len + 1
+    assert category1._Category__products[-1] == lawngrasses1
+    assert Category.product_count == initial_count + 1
+
+
+def test_add_product_invalid_type_raises_error(category1: Category) -> None:
+    """Тест: попытка добавить не-продукт вызывает TypeError"""
+    with pytest.raises(TypeError, match="Можно добавлять только объекты класса Product или его наследников"):
+        category1.add_product("invalid")
+
+
+def test_add_product_error_does_not_change_state(category1: Category) -> None:
+    """Тест: при ошибке добавления состояние категории не меняется"""
+    initial_products_len = len(category1._Category__products)
+    initial_product_count = Category.product_count
+
+    with pytest.raises(TypeError):
+        category1.add_product("invalid")
+
+    assert len(category1._Category__products) == initial_products_len
+    assert Category.product_count == initial_product_count

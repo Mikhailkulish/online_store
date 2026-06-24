@@ -3,7 +3,7 @@ class CategoryIterator:
 
     def __init__(self, category):
         """Инициализация итератора"""
-        self.products = category.get_products()  # Получаем список продуктов
+        self.products = category.get_products()
         self.index = 0
 
     def __iter__(self):
@@ -16,5 +16,4 @@ class CategoryIterator:
             product = self.products[self.index]
             self.index += 1
             return product
-        else:
-            raise StopIteration
+        raise StopIteration

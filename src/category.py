@@ -1,3 +1,6 @@
+from src.product import Product
+
+
 class Category:
     """Класс категорий"""
 
@@ -19,6 +22,9 @@ class Category:
 
     def add_product(self, product):
         """Метод для добавления товара в категорию"""
+        if not isinstance(product, Product):
+            raise TypeError("Можно добавлять только объекты класса Product или его наследников")
+
         self.__products.append(product)
         Category.product_count += 1
 
@@ -29,7 +35,7 @@ class Category:
 
     def get_products(self):
         """Метод для получения списка объектов продуктов"""
-        return self.__products.copy()  # Возвращаем копию для защиты данных
+        return self.__products.copy()
 
     def __str__(self):
         """Строковое представление категории"""
