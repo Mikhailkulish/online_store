@@ -1,13 +1,12 @@
-import pytest
+from src.lawngrass import LawnGrass
 from src.product import Product
 from src.smartphone import Smartphone
-from src.lawngrass import LawnGrass
 
 
 def test_print_mixin_output(capsys):
     """Тест: проверка вывода PrintMixin при создании объекта"""
     # Создаем объект - вывод должен произойти автоматически
-    product = Product("Test Product", "Test Description", 1000.0, 5)
+    _ = Product("Test Product", "Test Description", 1000.0, 5)
 
     # Захватываем вывод
     captured = capsys.readouterr()
@@ -23,7 +22,7 @@ def test_print_mixin_output_with_kwargs(capsys):
     """Тест: проверка вывода PrintMixin с именованными аргументами"""
     # Создаем продукт через new_product с kwargs
     product_dict = {"name": "Test", "description": "Desc", "price": 100, "quantity": 2}
-    product = Product.new_product(product_dict)
+    _ = Product.new_product(product_dict)
     captured = capsys.readouterr()
     # Проверяем, что вывод содержит информацию о создании
     assert "Product('Test', 'Desc', 100, 2)" in captured.out
@@ -31,7 +30,7 @@ def test_print_mixin_output_with_kwargs(capsys):
 
 def test_print_mixin_for_smartphone(capsys):
     """Тест: проверка вывода PrintMixin для дочернего класса Smartphone"""
-    smartphone = Smartphone("iPhone", "Smartphone", 1000.0, 5, "A15", "15 Pro", "256GB", "Black")
+    _ = Smartphone("iPhone", "Smartphone", 1000.0, 5, "A15", "15 Pro", "256GB", "Black")
     captured = capsys.readouterr()
     expected = "Smartphone('iPhone', 'Smartphone', 1000.0, 5, 'A15', '15 Pro', '256GB', 'Black')\n"
     assert captured.out == expected
@@ -39,7 +38,7 @@ def test_print_mixin_for_smartphone(capsys):
 
 def test_print_mixin_for_lawngrass(capsys):
     """Тест: проверка вывода PrintMixin для дочернего класса LawnGrass"""
-    grass = LawnGrass("Трава", "Газонная трава", 500.0, 10, "Россия", "30 дней", "Зеленый")
+    _ = LawnGrass("Трава", "Газонная трава", 500.0, 10, "Россия", "30 дней", "Зеленый")
     captured = capsys.readouterr()
     expected = "LawnGrass('Трава', 'Газонная трава', 500.0, 10, 'Россия', '30 дней', 'Зеленый')\n"
     assert captured.out == expected
@@ -54,12 +53,12 @@ def test_print_mixin_repr_method():
 
 def test_print_mixin_multiple_objects(capsys):
     """Тест: проверка вывода при создании нескольких объектов"""
-    product1 = Product("Product1", "Desc1", 100.0, 1)
-    product2 = Product("Product2", "Desc2", 200.0, 2)
+    _ = Product("Product1", "Desc1", 100.0, 1)
+    _ = Product("Product2", "Desc2", 200.0, 2)
     captured = capsys.readouterr()
 
     # Проверяем, что оба объекта были выведены
-    output_lines = captured.out.strip().split('\n')
+    output_lines = captured.out.strip().split("\n")
     assert len(output_lines) == 2
     assert "Product('Product1', 'Desc1', 100.0, 1)" in output_lines[0]
     assert "Product('Product2', 'Desc2', 200.0, 2)" in output_lines[1]
@@ -71,8 +70,8 @@ def test_print_mixin_inheritance():
     product = Product("Test", "Desc", 300.0, 4)
 
     # Проверяем, что у объекта есть атрибуты, добавленные миксином
-    assert hasattr(product, '_args')
-    assert hasattr(product, '_kwargs')
+    assert hasattr(product, "_args")
+    assert hasattr(product, "_kwargs")
 
     # Проверяем, что параметры сохранились корректно
     assert product._args == ("Test", "Desc", 300.0, 4)

@@ -1,9 +1,9 @@
 import pytest
 
+from src.base_product import BaseProduct
+from src.lawngrass import LawnGrass
 from src.product import Product
 from src.smartphone import Smartphone
-from src.lawngrass import LawnGrass
-from src.base_product import BaseProduct
 
 
 def test_product_init(product1: Product) -> None:
@@ -169,8 +169,8 @@ def test_product_with_mixin_attributes():
     product = Product("Test", "Desc", 100.0, 5)
 
     # Проверяем наличие атрибутов от PrintMixin
-    assert hasattr(product, '_args'), "Объект должен иметь атрибут _args от PrintMixin"
-    assert hasattr(product, '_kwargs'), "Объект должен иметь атрибут _kwargs от PrintMixin"
+    assert hasattr(product, "_args"), "Объект должен иметь атрибут _args от PrintMixin"
+    assert hasattr(product, "_kwargs"), "Объект должен иметь атрибут _kwargs от PrintMixin"
 
     # Проверяем, что параметры сохранились корректно
     assert product._args == ("Test", "Desc", 100.0, 5)
@@ -280,8 +280,8 @@ def test_product_with_mixin_inheritance_in_subclass():
     smartphone = Smartphone("iPhone", "Smartphone", 1000.0, 5, "A15", "15 Pro", "256GB", "Black")
 
     # Проверяем наличие атрибутов от миксина
-    assert hasattr(smartphone, '_args')
-    assert hasattr(smartphone, '_kwargs')
+    assert hasattr(smartphone, "_args")
+    assert hasattr(smartphone, "_kwargs")
 
     # Проверяем, что все параметры сохранились
     expected_args = ("iPhone", "Smartphone", 1000.0, 5, "A15", "15 Pro", "256GB", "Black")
@@ -313,14 +313,13 @@ def test_product_with_mixin_private_attribute_access():
     assert product.price == 500.0
 
     # Проверяем, что миксин не хранит приватный атрибут
-    assert '__price' not in product._args
+    assert "__price" not in product._args
 
 
 def test_product_with_mixin_equality_operations():
     """Тест: проверка, что миксин не влияет на сравнение объектов"""
     product1 = Product("Test", "Desc", 100.0, 5)
     product2 = Product("Test", "Desc", 100.0, 5)
-    product3 = Product("Other", "Desc", 200.0, 3)
 
     # Проверяем, что объекты разные (несмотря на одинаковые значения)
     assert product1 is not product2
@@ -351,12 +350,12 @@ def test_product_with_mixin_mro():
     mro_names = [cls.__name__ for cls in mro]
 
     # Проверяем порядок
-    assert 'Product' in mro_names
-    assert 'PrintMixin' in mro_names
-    assert 'BaseProduct' in mro_names
+    assert "Product" in mro_names
+    assert "PrintMixin" in mro_names
+    assert "BaseProduct" in mro_names
 
     # PrintMixin должен быть перед BaseProduct
-    assert mro_names.index('PrintMixin') < mro_names.index('BaseProduct')
+    assert mro_names.index("PrintMixin") < mro_names.index("BaseProduct")
 
 
 def test_product_with_mixin_no_side_effects():
