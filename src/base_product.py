@@ -5,7 +5,7 @@ class BaseProduct(ABC):
     """Абстрактный базовый класс продуктов"""
 
     @abstractmethod
-    def __init__(self, name, description, price, quantity):
+    def __init__(self, *args, **kwargs):
         """Абстрактный метод инициализации"""
         pass
 
