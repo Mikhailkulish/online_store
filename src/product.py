@@ -1,4 +1,8 @@
-class Product:
+from src.base_product import BaseProduct
+from src.print_mixin import PrintMixin
+
+
+class Product(PrintMixin, BaseProduct):
     """Класс продуктов"""
 
     name: str
@@ -6,8 +10,9 @@ class Product:
     __price: float  # сделали приватным
     quantity: int
 
-    def __init__(self, name, description, price, quantity):
+    def __init__(self, name, description, price, quantity, *args, **kwargs):
         """Инициализация атрибутов объектов класса продуктов"""
+        super().__init__(name, description, price, quantity, *args, **kwargs)
         self.name = name
         self.description = description
         self.__price = price  # приватный атрибут
