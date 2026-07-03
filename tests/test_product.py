@@ -13,6 +13,12 @@ def test_product_init(product1: Product) -> None:
     assert product1.quantity == 5
 
 
+def test_product_init_with_zero_quantity() -> None:
+    """Тест: создание продукта с нулевым количеством должно вызывать ValueError"""
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product("Test", "Description", 100.0, 0)
+
+
 def test_price_setter_invalid() -> None:
     product = Product("Test", "Desc", 100, 1)
     product.price = -50
