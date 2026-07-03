@@ -215,3 +215,19 @@ def test_add_product_error_does_not_change_state(category1: Category) -> None:
 
     assert len(category1._Category__products) == initial_products_len
     assert Category.product_count == initial_product_count
+
+
+def test_middle_price_with_multiple_products(category1):
+    """Тест расчета средней цены для категории с несколькими товарами"""
+    expected = (180000.0 * 5 + 210000.0 * 8 + 31000.0 * 14) / (5 + 8 + 14)
+    assert category1.middle_price() == expected
+
+
+def test_middle_price_with_single_product(single_product_category):
+    """Тест расчета средней цены для категории с одним товаром"""
+    assert single_product_category.middle_price() == 15000.0
+
+
+def test_middle_price_with_empty_category(empty_category):
+    """Тест расчета средней цены для пустой категории (обработка ZeroDivisionError)"""
+    assert empty_category.middle_price() == 0
